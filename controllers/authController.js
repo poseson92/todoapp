@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
-    return res.json({ ok: true, message: "로그인 성공" });
+    return res.json({ ok: true, message: "로그인 성공", token });
   } catch (err) {
     console.log(err);
   }
