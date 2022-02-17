@@ -18,13 +18,19 @@ module.exports = class User extends Sequelize.Model {
         sequelize,
         timestamps: false,
         underscored: false,
-        paranoid: false,
         modelName: "User",
         tableName: "users",
+        paranoid: false,
         charset: "utf8",
         collate: "utf8_general_ci",
       }
     );
   }
-  static associate(db) {}
+  static associate(db) {
+    db.User.hasMany(db.Todo, {
+      foreignKey: { name: "commenter", allowNull: false },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
+    });
+  }
 };

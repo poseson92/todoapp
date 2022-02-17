@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const User = require("../models/users");
+const User = require("../models/user");
 
 exports.signup = async (req, res) => {
   const { userId, password } = req.body;
@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
-    return res.json({ token, ok: true, message: "로그인 성공" });
+    return res.json({ ok: true, message: "로그인 성공" });
   } catch (err) {
     console.log(err);
   }

@@ -21,6 +21,5 @@ module.exports = {
     database: "todolist_production",
     host: process.env.MYSQL_HOST,
     dialect: "mysql",
-    logging: false,
   },
 };
