@@ -13,7 +13,7 @@ exports.getTodo = async (req, res, next) => {
     // const todo = await sequelize.query(query, { type: QueryTypes.SELECT });
     const todo = await Todo.findAll({
       where: {
-        userId: req.body.userId,
+        userId: req.params.userId,
       },
       // include: [{ model: User, required: true, attributes: ["userId"] }],
       // attributes: { exclude: ["id", "commenter"] },
@@ -31,7 +31,7 @@ exports.getTodo = async (req, res, next) => {
 exports.postTodo = async (req, res, next) => {
   try {
     const user = await User.findOne({
-      where: { userId: req.body.userId },
+      where: { userId: req.params.userId },
     });
     if (!user) {
       return res.status(401).json({ ok: false, error: "존재하지 않는 유저" });
