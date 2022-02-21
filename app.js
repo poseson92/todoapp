@@ -7,7 +7,7 @@ const authRouter = require("./routes/authRouter");
 const todoRouter = require("./routes/todoRouter");
 
 const app = express();
-app.set("port", 4001);
+app.set("port", 4000);
 
 // config에서 sequelize 불러와서 sync로 연결
 sequelize
