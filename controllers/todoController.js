@@ -76,7 +76,10 @@ exports.updateTodo = async (req, res, next) => {
         where: { id: updateId },
       }
     );
-    return res.status(201).json({ ok: true, message: "수정 완료", todo });
+    const user = await Todo.findOne({
+      where: { id: updateId },
+    });
+    return res.status(201).json({ ok: true, message: "수정 완료", user });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
