@@ -18,7 +18,6 @@ exports.getTodo = async (req, res, next) => {
       // include: [{ model: User, required: true, attributes: ["userId"] }],
       // attributes: { exclude: ["id", "commenter"] },
     });
-    console.log(req.body);
     return res.status(201).json({ ok: true, todo });
   } catch (error) {
     if (!error.statusCode) {
@@ -41,6 +40,7 @@ exports.postTodo = async (req, res, next) => {
       contents: req.body.contents,
       check: req.body.check,
       commenter: req.body.commenter,
+      color: req.body.color,
     });
     const boolean = req.body.check;
     if (boolean !== 0 && boolean !== 1 && boolean !== true && boolean !== false) {

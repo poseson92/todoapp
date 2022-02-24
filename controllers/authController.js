@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
+const Todo = require("../models/todo");
 
 exports.signup = async (req, res) => {
   const { userId, password } = req.body;
@@ -23,6 +24,10 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { userId, password } = req.body;
+  const commenter = await User.findOne({
+    where: { userId },
+    attributes: { exclude: ["userId", "password"] },
+  });
   try {
     const user = await User.findOne({ where: { userId } });
     if (!user) {
@@ -35,7 +40,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
-    return res.json({ ok: true, message: "로그인 성공", token, userId });
+    return res.json({ ok: true, message: "로그인 성공", token, userId, commenter });
   } catch (err) {
     console.log(err);
   }

@@ -16,6 +16,10 @@ module.exports = class Todo extends Sequelize.Model {
           type: Sequelize.BOOLEAN,
           allowNull: false,
         },
+        color: {
+          type: Sequelize.STRING(20),
+          allowNull: false,
+        },
       },
       {
         sequelize,
