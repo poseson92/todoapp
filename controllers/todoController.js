@@ -11,10 +11,17 @@ exports.getTodo = async (req, res, next) => {
     //               on u.id = t.commenter
     //               where commenter = ${req.body.commenter}`;
     // const todo = await sequelize.query(query, { type: QueryTypes.SELECT });
+    let page = req.query.page;
+    let offset = 0;
+    if (page > 1) {
+      offset = 12 * (page - 1);
+    }
     const todo = await Todo.findAll({
       where: {
         userId: req.params.userId,
       },
+      offset: offset,
+      limit: 12,
       // include: [{ model: User, required: true, attributes: ["userId"] }],
       // attributes: { exclude: ["id", "commenter"] },
     });
