@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const sequelize = require("sequelize");
 // const { sequelize } = require("../models/index");
 // const { QueryTypes } = require("sequelize");
 
@@ -43,13 +42,13 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, {
       expiresIn: "30d",
     });
-    const countTodo = await Todo.findAll({
-      attributes: {
-        include: [[sequelize.fn("COUNT", sequelize.col("id")), "count_contents"]],
-        exclude: ["id", "userId", "contents", "check", "color", "commenter"],
-      },
-    });
-    return res.json({ ok: true, message: "로그인 성공", token, userId, commenter, countTodo });
+    // const countTodo = await Todo.findAll({
+    //   attributes: {
+    //     include: [[sequelize.fn("COUNT", sequelize.col("id")), "count_contents"]],
+    //     exclude: ["id", "userId", "contents", "check", "color", "commenter"],
+    //   },
+    // });
+    return res.json({ ok: true, message: "로그인 성공", token, userId, commenter });
   } catch (err) {
     console.log(err);
   }

@@ -1,5 +1,6 @@
 const Todo = require("../models/todo");
 const User = require("../models/user");
+const sequelize = require("sequelize");
 // const { sequelize } = require("../models/index");
 // const { QueryTypes } = require("sequelize");
 
@@ -25,7 +26,13 @@ exports.getTodo = async (req, res, next) => {
       // include: [{ model: User, required: true, attributes: ["userId"] }],
       // attributes: { exclude: ["id", "commenter"] },
     });
-    return res.status(201).json({ ok: true, todo });
+    const countTodo = await Todo.findAll({
+      attributes: {
+        include: [[sequelize.fn("COUNT", sequelize.col("id")), "count_contents"]],
+        exclude: ["id", "userId", "contents", "check", "color", "commenter"],
+      },
+    });
+    return res.status(201).json({ ok: true, todo, countTodo });
   } catch (error) {
     if (!error.statusCode) {
       error.statusCode = 500;
